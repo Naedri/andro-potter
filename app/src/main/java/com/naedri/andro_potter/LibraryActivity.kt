@@ -2,23 +2,78 @@ package com.naedri.andro_potter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.GridLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+import androidx.activity.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class LibraryViewModel : ViewModel() {
+    fun loadBooks() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://henri-potier.techx.fr")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service: HenriPotierService = retrofit.create(HenriPotierService::class.java)
+
+        state.postValue(LibraryState(emptyList(), true))
+
+        viewModelScope.launch(context = Dispatchers.Main) {
+            val books = withContext(Dispatchers.IO) {
+                service.listBooks()
+            }
+            state.postValue(LibraryState(books, false))
+        }
+    }
+
+    val state = MutableLiveData<LibraryState>()
+}
+
+data class LibraryState(
+    val books: List<Book> = emptyList(),
+    val isLoading: Boolean
+)
+
+class LibraryActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<LibraryViewModel>()
+
 
     lateinit var recyclerViewBooks: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_library)
+
+        viewModel.state.observe(this) { state ->
+            Toast.makeText(
+                this@LibraryActivity,
+                "${state.books.size} books | isLoading ${state.isLoading}",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
+
+        viewModel.loadBooks()
+
+
+
+
+
 
         recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
 
-        val items = listOf<Book>(
+        val items = viewModel.state.value?.books
+            /*
+            listOf<Book>(
             Book( "c8fabf68-8374-48fe-a7ea-a00ccd07afff",
                 "Henri Potier à l'école des sorciers",
                 35,
@@ -68,14 +123,14 @@ class MainActivity : AppCompatActivity() {
                     "Le nouveau professeur de défense contre les forces du mal, Gilderoy Lockhart, se montre particulièrement narcissique et inefficace. Pendant ce temps, Henri entend une voix étrange en parcourant les couloirs du château, systématiquement associée à la pétrification immédiate d'un élève moldu de l'école. Dès la première attaque, un message sanglant apparaît sur l'un des murs, informant que la Chambre des secrets a été ouverte. Dumbledore et les autres professeurs (ainsi que Henri, Ron et Hermione) doivent prendre les mesures nécessaires pour trouver l'identité du coupable et protéger les élèves contre de nouvelles agressions."
                 )
             )
-        )
+        )*/
 
         val columns = getResources().getInteger(R.integer.gallery_columns);
 
 
         recyclerViewBooks.apply {
-            recyclerViewBooks.layoutManager = GridLayoutManager(this@MainActivity,columns)
-            recyclerViewBooks.adapter = BooksAdapter(items)
+            recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity,columns)
+            recyclerViewBooks.adapter = items?.let { BooksAdapter(it) }
         }
 
 
