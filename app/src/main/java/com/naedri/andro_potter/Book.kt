@@ -1,3 +1,9 @@
 package com.naedri.andro_potter
 
-data class Book(val isbn: String, val title: String, val price: Int, val cover: String, val synopsis: Array<String>)
+data class Book(
+    val isbn: String,
+    val title: String,
+    val price: Int,
+    val cover: String,
+    val synopsis: Array<String>
+)

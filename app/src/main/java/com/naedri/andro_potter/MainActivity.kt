@@ -1,23 +1,47 @@
 package com.naedri.andro_potter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.GridLayout
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel by viewModels<LibraryViewModel>()
     lateinit var recyclerViewBooks: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
 
+        viewModel.loadBooks()
+
+        viewModel.state.observe(this) { state ->
+            Toast.makeText(
+                this@MainActivity,
+                "${state.books.size} books | isLoading ${state.isLoading}",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
+
+        val res = viewModel.state.value?.books
+        if (res?.isEmpty() == false) {
+            val items: List<Book> = res
+            val columns = resources.getInteger(R.integer.gallery_columns)
+
+            recyclerViewBooks.apply {
+                recyclerViewBooks.layoutManager = GridLayoutManager(this@MainActivity, columns)
+                recyclerViewBooks.adapter = BooksAdapter(items)
+            }
+        }
+
+
+/*
         val items = listOf<Book>(
             Book( "c8fabf68-8374-48fe-a7ea-a00ccd07afff",
                 "Henri Potier à l'école des sorciers",
@@ -69,15 +93,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         )
-
-        val columns = getResources().getInteger(R.integer.gallery_columns);
-
-
-        recyclerViewBooks.apply {
-            recyclerViewBooks.layoutManager = GridLayoutManager(this@MainActivity,columns)
-            recyclerViewBooks.adapter = BooksAdapter(items)
-        }
-
+        */
 
 
     }
