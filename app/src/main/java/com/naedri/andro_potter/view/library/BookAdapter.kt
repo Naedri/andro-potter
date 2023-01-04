@@ -1,4 +1,4 @@
-package com.naedri.andro_potter
+package com.naedri.andro_potter.view.library
 
 import android.net.Uri
 import android.util.Log
@@ -10,8 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.naedri.andro_potter.model.Book
+import com.naedri.andro_potter.R
 
-class BooksAdapter(var items: List<Book>) : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
+class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdapter.BooksViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
@@ -23,7 +26,7 @@ class BooksAdapter(var items: List<Book>) : RecyclerView.Adapter<BooksAdapter.Bo
         holder.bind(book)
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() :Int = items.size
 
     inner class BooksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var bookTitle: TextView

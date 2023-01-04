@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Andropotter"
         tools:targetApi="31">
         <activity
-            android:name=".LibraryActivity"
+            android:name=".view.library.LibraryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
