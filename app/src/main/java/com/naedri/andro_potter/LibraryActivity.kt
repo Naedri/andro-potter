@@ -1,13 +1,11 @@
 package com.naedri.andro_potter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import androidx.activity.viewModels
-
 
 class LibraryActivity : AppCompatActivity() {
 
@@ -26,17 +24,14 @@ class LibraryActivity : AppCompatActivity() {
             )
                 .show()
         }
-
         viewModel.loadBooks()
-
         recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
 
         val items = viewModel.state.value?.books
-
         val columns = getResources().getInteger(R.integer.gallery_columns);
 
         recyclerViewBooks.apply {
-            recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity,columns)
+            recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity, columns)
             recyclerViewBooks.adapter = items?.let { BooksAdapter(it) }
         }
     }
