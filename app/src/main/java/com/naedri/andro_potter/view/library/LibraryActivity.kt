@@ -16,25 +16,28 @@ class LibraryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //supportActionBar?.hide()
         setContentView(R.layout.activity_library)
 
         viewModel.getState().observe(this) { state ->
+            /*
             Toast.makeText(
                 this@LibraryActivity,
-                "${state.books.size} books | isLoading ${state.isLoading}",
+                "${state.books.size} books | ${ if(state.isLoading) "Loading" else "Loaded"}",
                 Toast.LENGTH_SHORT
-            )
-                .show()
+            ).show()
+            */
+            
+            if(state.books.isNotEmpty()){
+                val items = state.books
+                val columns = resources.getInteger(R.integer.gallery_columns)
+                recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
+                recyclerViewBooks.apply {
+                    recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity, columns)
+                    recyclerViewBooks.adapter = items?.let { BookAdapter(it) }
+                }
+            }
         }
         viewModel.loadBooks()
-        recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
-
-        val items = viewModel.getState().value?.books
-        val columns = resources.getInteger(R.integer.gallery_columns)
-
-        recyclerViewBooks.apply {
-            recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity, columns)
-            recyclerViewBooks.adapter = items?.let { BookAdapter(it) }
-        }
     }
 }
