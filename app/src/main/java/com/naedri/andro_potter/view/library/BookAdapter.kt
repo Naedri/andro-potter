@@ -15,6 +15,8 @@ import com.naedri.andro_potter.R
 
 class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdapter.BooksViewHolder>() {
 
+    var onItemClick : ((Book) -> Unit)? = null;
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
@@ -24,6 +26,11 @@ class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdap
     override fun onBindViewHolder(holder: BooksViewHolder, position: Int) {
         val book = items[position]
         holder.bind(book)
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(book);
+        }
+
     }
 
     override fun getItemCount() :Int = items.size
