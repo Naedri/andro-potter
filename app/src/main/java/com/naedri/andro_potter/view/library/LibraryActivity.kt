@@ -1,5 +1,6 @@
 package com.naedri.andro_potter.view.library
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -34,10 +35,21 @@ class LibraryActivity : AppCompatActivity() {
                 recyclerViewBooks = findViewById(R.id.recyclerViewBooks)
                 recyclerViewBooks.apply {
                     recyclerViewBooks.layoutManager = GridLayoutManager(this@LibraryActivity, columns)
-                    recyclerViewBooks.adapter = items?.let { BookAdapter(it) }
+                    val bookAdapter = items?.let { BookAdapter(it) }
+                    recyclerViewBooks.adapter = bookAdapter
+
+                    bookAdapter?.onItemClick = {
+                        val intent = Intent(this@LibraryActivity, BookDetailActivity::class.java)
+                        //val intent = Intent(BookDetailActivity::class.java)
+                        intent.putExtra("book",it)
+                        startActivity(intent)
+
+                    }
                 }
             }
         }
         viewModel.loadBooks()
+
+
     }
 }
