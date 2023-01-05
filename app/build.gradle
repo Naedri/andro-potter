@@ -45,10 +45,21 @@ dependencies {
             "com.squareup.retrofit2:retrofit:2.9.0",
             "com.squareup.retrofit2:converter-gson:2.9.0",
             'androidx.fragment:fragment-ktx:1.1.0',
-            'io.coil-kt:coil:2.2.2'
+            'io.coil-kt:coil:2.2.2',
+
+            'com.jakewharton:butterknife:10.2.3',
+            //'com.github.bumptech.glide:glide:4.12.0',
+            'com.nex3z:notification-badge:1.0.4',
+            //'org.greenrobot:evenbus:"3.2.0'
     )
+    /*
+    annotationProcessor(
+            'com.jakewharton:butterknife-compiler:10.2.3',
+            'com.github.bumptech.glide:compiler:4.12.0',
+    )
+     */
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
 }

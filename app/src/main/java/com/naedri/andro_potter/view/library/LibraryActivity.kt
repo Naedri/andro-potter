@@ -1,22 +1,34 @@
 package com.naedri.andro_potter.view.library
 
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
 import com.naedri.andro_potter.R
+
+import com.nex3z.notificationbadge.NotificationBadge;
 
 class LibraryActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<LibraryViewModel>()
 
+    @BindView(R.id.recyclerViewBooks)
     private lateinit var recyclerViewBooks: RecyclerView
+    @BindView(R.id.mainLayout)
+    private lateinit var mainLayout: RelativeLayout
+    @BindView(R.id.badge)
+    private lateinit var badge:NotificationBadge;
+    @BindView(R.id.btnCart)
+    private lateinit var btnCart:FrameLayout;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //supportActionBar?.hide()
+        supportActionBar?.hide()
         setContentView(R.layout.activity_library)
 
         viewModel.getState().observe(this) { state ->

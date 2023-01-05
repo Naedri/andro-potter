@@ -26,4 +26,16 @@ class BucketState {
         fun emptyBucket() {
             bucket.clear()
         }
+
+        fun countItemBucket():Int{
+            var acc = 0
+            bucket.map { itemBucket -> acc += itemBucket.quantity }
+            return acc;
+        }
+
+        fun getBucketPrice():Int{
+            var acc = 0
+            bucket.map { itemBucket -> acc += itemBucket.quantity * itemBucket.book.price }
+            return acc;
+        }
     }
