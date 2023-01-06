@@ -2,6 +2,7 @@ package com.naedri.andro_potter.view.library
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +15,12 @@ class BucketActivity : AppCompatActivity() {
 
     companion object {
         internal const val BUCKET = "BUCKET"
+        @JvmStatic
+        var bucket: Bucket = Bucket();
     }
-
-    private lateinit var bucket: Bucket
     private lateinit var bucketItems: ArrayList<ItemBucket>
     private lateinit var recyclerViewBucket: RecyclerView
-
+    private lateinit var emptyBucketButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -38,5 +39,26 @@ class BucketActivity : AppCompatActivity() {
         val columns = resources.getInteger(R.integer.gallery_columns)
         recyclerViewBucket.layoutManager = GridLayoutManager(this, columns)
         recyclerViewBucket.adapter = adapter
+
+        adapter?.onRemoveItemClick = {
+            Log.d(
+                "BucketActivity",
+                "Removing book: ${it.title}"
+            )
+            Log.d(
+                "LibraryActivity",
+                "Bucket is now: ${bucket}"
+            )
+            bucket.removeItemBucket(it)
+        }
+
+        emptyBucketButton = this.findViewById(R.id.buttonBuy);
+        emptyBucketButton?.setOnClickListener {
+            Log.d(
+                "BucketAdapter",
+                "Try to flush bucket"
+            )
+            bucket.flushBucket()
+        }
     }
 }

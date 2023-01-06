@@ -37,14 +37,16 @@ class Bucket() : Parcelable {
 
     fun removeItemBucket(book: Book) {
         items.forEach {
-            if (it.quantity > 1) {
-                it.quantity = it.quantity - 1
-            } else items.remove(it)
+            if (it.book.isbn == book.isbn) {
+                if (it.quantity > 1) {
+                    it.quantity = it.quantity - 1
+                } else items.remove(it)
+            }
         }
     }
 
-    fun emptyBucket() {
-        items.clear()
+    fun flushBucket() {
+        items = ArrayList()
     }
 
     fun countItemBucket(): Int {

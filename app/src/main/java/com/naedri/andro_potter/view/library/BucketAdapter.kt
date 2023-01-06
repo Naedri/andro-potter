@@ -1,6 +1,7 @@
 package com.naedri.andro_potter.view.library
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,13 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.naedri.andro_potter.R
+import com.naedri.andro_potter.model.Book
 import com.naedri.andro_potter.model.Bucket
 
 class BucketAdapter(private val bucket: Bucket) :
     RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
+
+    var onRemoveItemClick: ((Book) -> Unit)? = null;
 
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cartBookName: TextView = itemView.findViewById(R.id.bookBucketTitle)
@@ -32,8 +36,11 @@ class BucketAdapter(private val bucket: Bucket) :
         holder.cartBookPrice.text = book.price.toString() + '€'
         holder.cartBookQuantity.text = quantity.toString() + 'x'
         holder.cartRemoveButton.setOnClickListener {
-            // Supprimer le produit du panier
-            bucket.removeItemBucket(book)
+            Log.d(
+                "BucketAdapter",
+                "Try to delete book from bucket: $book"
+            )
+            onRemoveItemClick?.invoke(book);
         }
     }
 
