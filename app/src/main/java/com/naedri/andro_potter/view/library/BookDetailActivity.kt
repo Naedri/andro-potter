@@ -13,6 +13,7 @@ class BookDetailActivity  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.acitivty_book_detail)
         val book = intent.getParcelableExtra<Book>("book");
 
