@@ -10,9 +10,9 @@ Le but est de récupérer une liste de livres pour les afficher
 
 Ce qui a été fait : 
 
-- [ ] affichage d'une liste d'ouvrages (avec un affichage différent en Paysage)
-- [ ] affichage du détails pour un item (avec un affichage différent en Paysage)
-- [ ] affichage d'un panier rassemblant des items sélectionnés
+- [x] affichage d'une liste d'ouvrages (avec un affichage différent en Paysage)
+- [x] affichage du détails pour un item (avec un affichage différent en Paysage)
+- [x] affichage d'un panier rassemblant des items sélectionnés
 
 ### Illustrations
 
