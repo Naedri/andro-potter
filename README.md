@@ -1,6 +1,6 @@
 # andro-potter
 
-Petit projet Androïd, réalisé en Kotlin pour apprendre les bases.
+Petit projet Android, réalisé en Kotlin pour apprendre les bases.
 
 ## Objectifs
 
