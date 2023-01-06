@@ -27,7 +27,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity android:name=".view.library.BookDetailActivity" />
+        <activity android:name=".view.library.BucketActivity" android:exported="true"/>
 
     </application>
 
