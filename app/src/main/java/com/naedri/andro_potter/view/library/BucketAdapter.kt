@@ -38,9 +38,25 @@ class BucketAdapter(private val bucket: Bucket) :
         holder.cartRemoveButton.setOnClickListener {
             Log.d(
                 "BucketAdapter",
-                "Try to delete book from bucket: $book"
+                "Try to delete book from bucket: ${book.title}"
             )
             onRemoveItemClick?.invoke(book);
+            if (quantity > 1) {
+                Log.d(
+                    "BucketAdapter",
+                    "Keeping item for: ${book.title}"
+                )
+                notifyItemChanged(position)
+            } else {
+                Log.d(
+                    "BucketAdapter",
+                    "Deleting item for: ${book.title}"
+                )
+                notifyItemRemoved(position);
+                //this line below gives you the animation and also updates the
+                //list items after the deleted item
+                notifyItemRangeChanged(position, quantity);
+            }
         }
     }
 

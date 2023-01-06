@@ -43,7 +43,6 @@ class LibraryActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             */
-
             if (state.books.isNotEmpty()) {
                 val items = state.books
                 val columns = resources.getInteger(R.integer.gallery_columns)
