@@ -3,6 +3,7 @@ package com.naedri.andro_potter.view.library
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.naedri.andro_potter.R
@@ -33,7 +34,9 @@ class BucketActivity : AppCompatActivity() {
 
         recyclerViewBucket = findViewById(R.id.recyclerViewBucket)
         val adapter = BucketAdapter(bucket)
-        recyclerViewBucket.layoutManager = LinearLayoutManager(this)
+
+        val columns = resources.getInteger(R.integer.gallery_columns)
+        recyclerViewBucket.layoutManager = GridLayoutManager(this, columns)
         recyclerViewBucket.adapter = adapter
     }
 }
