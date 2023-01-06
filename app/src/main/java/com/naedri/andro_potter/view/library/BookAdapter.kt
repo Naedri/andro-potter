@@ -1,5 +1,6 @@
 package com.naedri.andro_potter.view.library
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,14 +9,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.naedri.andro_potter.model.Book
 import com.naedri.andro_potter.R
+import com.naedri.andro_potter.model.Book
+import com.nex3z.notificationbadge.NotificationBadge
+
 
 class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdapter.BooksViewHolder>() {
 
     var onItemClick : ((Book) -> Unit)? = null;
+    var onAddToCartClick : ((Book) -> Unit)? = null;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
         val itemView =
@@ -30,7 +36,6 @@ class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdap
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(book);
         }
-
     }
 
     override fun getItemCount() :Int = items.size
@@ -46,7 +51,9 @@ class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdap
             bookCover = itemView.findViewById(R.id.bookCover)
             addToCart = itemView.findViewById(R.id.buttonAddToCart)
             addToCart.setOnClickListener {
-                Log.d("BooksAdapter", bookTitle.text as String)
+                Log.d("BookAdapter", adapterPosition.toString());
+                Log.d("BooksAdapter", "Try to add to cart button clicked for book: ${bookTitle.text as String}")
+                onAddToCartClick?.invoke(items[adapterPosition]);
             }
         }
         fun bind(book: Book) {
