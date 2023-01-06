@@ -16,7 +16,7 @@ class Bucket() : Parcelable {
     }
 
     override fun toString(): String {
-        if (items.size>0){
+        if (items.size > 0) {
             var s = "Bucket contains \n"
             items.map { itemBucket -> s += "- $itemBucket\n" }
             return s
@@ -27,8 +27,8 @@ class Bucket() : Parcelable {
     fun addItemBucket(book: Book) {
         var found = false
         items.forEach {
-            if(it.book.isbn == book.isbn){
-                it.quantity = it.quantity +1
+            if (it.book.isbn == book.isbn) {
+                it.quantity = it.quantity + 1
                 found = true
             }
         }
@@ -38,9 +38,8 @@ class Bucket() : Parcelable {
     fun removeItemBucket(book: Book) {
         items.forEach {
             if (it.quantity > 1) {
-                it.quantity = it.quantity -1
-            }
-            else items.remove(it)
+                it.quantity = it.quantity - 1
+            } else items.remove(it)
         }
     }
 

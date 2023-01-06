@@ -1,6 +1,5 @@
 package com.naedri.andro_potter.view.library
 
-import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,19 +8,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.naedri.andro_potter.R
 import com.naedri.andro_potter.model.Book
-import com.nex3z.notificationbadge.NotificationBadge
 
 
-class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdapter.BooksViewHolder>() {
+class BookAdapter(private var items: List<Book>) :
+    RecyclerView.Adapter<BookAdapter.BooksViewHolder>() {
 
-    var onItemClick : ((Book) -> Unit)? = null;
-    var onAddToCartClick : ((Book) -> Unit)? = null;
+    var onItemClick: ((Book) -> Unit)? = null;
+    var onAddToCartClick: ((Book) -> Unit)? = null;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
         val itemView =
@@ -33,18 +30,19 @@ class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdap
         val book = items[position]
         holder.bind(book)
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onItemClick?.invoke(book);
         }
     }
 
-    override fun getItemCount() :Int = items.size
+    override fun getItemCount(): Int = items.size
 
     inner class BooksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var bookTitle: TextView
         var bookPrice: TextView
         var bookCover: ImageView
         var addToCart: Button
+
         init {
             bookTitle = itemView.findViewById(R.id.bookTitle)
             bookPrice = itemView.findViewById(R.id.bookPrice)
@@ -52,10 +50,14 @@ class BookAdapter(private var items: List<Book>) : RecyclerView.Adapter<BookAdap
             addToCart = itemView.findViewById(R.id.buttonAddToCart)
             addToCart.setOnClickListener {
                 Log.d("BookAdapter", adapterPosition.toString());
-                Log.d("BooksAdapter", "Try to add to cart button clicked for book: ${bookTitle.text as String}")
+                Log.d(
+                    "BooksAdapter",
+                    "Try to add to cart button clicked for book: ${bookTitle.text as String}"
+                )
                 onAddToCartClick?.invoke(items[adapterPosition]);
             }
         }
+
         fun bind(book: Book) {
             bookTitle.text = book.title
             bookPrice.text = book.price.toString() + "€"

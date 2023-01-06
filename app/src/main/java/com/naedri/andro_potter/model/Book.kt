@@ -11,4 +11,4 @@ data class Book(
     val price: Int,
     val cover: String,
     val synopsis: List<String>
-):Parcelable
+) : Parcelable

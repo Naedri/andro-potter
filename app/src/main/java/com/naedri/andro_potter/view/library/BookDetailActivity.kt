@@ -9,7 +9,7 @@ import coil.load
 import com.naedri.andro_potter.R
 import com.naedri.andro_potter.model.Book
 
-class BookDetailActivity  : AppCompatActivity() {
+class BookDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,11 +17,11 @@ class BookDetailActivity  : AppCompatActivity() {
         setContentView(R.layout.acitivty_book_detail)
         val book = intent.getParcelableExtra<Book>("book");
 
-        if(book != null){
-            val title:TextView = findViewById(R.id.bookTitle)
-            val price:TextView = findViewById(R.id.bookPrice)
+        if (book != null) {
+            val title: TextView = findViewById(R.id.bookTitle)
+            val price: TextView = findViewById(R.id.bookPrice)
             val cover: ImageView = findViewById(R.id.bookCover)
-            val synopsis:TextView = findViewById(R.id.bookSynopsis)
+            val synopsis: TextView = findViewById(R.id.bookSynopsis)
 
             title.text = book.title
             price.text = book.price.toString() + "€"

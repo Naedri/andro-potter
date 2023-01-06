@@ -5,7 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class FetchBookService {
     private fun fetchBookService() {}
-    companion object{
+
+    companion object {
         private var instance: Retrofit? = null
         private var service: HenriPotierService? = null
 

@@ -14,13 +14,13 @@ import kotlinx.coroutines.withContext
 class LibraryViewModel : ViewModel() {
 
     private val state = MutableLiveData<LibraryState>()
-    fun getState(): MutableLiveData<LibraryState>{
+    fun getState(): MutableLiveData<LibraryState> {
         return state
     }
 
     fun loadBooks() {
         val service: HenriPotierService? = FetchBookService.getFetchBookService()
-        var books : List<Book>
+        var books: List<Book>
         state.postValue(LibraryState(emptyList(), true))
 
         viewModelScope.launch(context = Dispatchers.Main) {
